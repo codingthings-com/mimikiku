@@ -1,0 +1,85 @@
+name: mimikiku
+
+services:
+  server:
+    image: mimikiku-server:latest
+    networks:
+      - mimikiku-network
+    build:
+      context: ..
+      dockerfile: docker/server.Dockerfile
+    container_name: mimikiku-server
+    ports:
+      - "7777:7777"
+    volumes:
+      - ../logs:/app/logs
+      - model-cache:/root/.cache/huggingface
+    # Injects HUGGING_FACE_HUB_TOKEN (and other vars) from the host .env at runtime.
+    # The .env is NOT baked into the image; it is only read here.
+    # Optional so stop/logs work without it; docker-start.sh insists on it.
+    env_file:
+      - path: ../.env
+        required: false
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - PYTHONUNBUFFERED=1
+      # Accounts and transcripts. Point every instance at the same Mongo to run several.
+      - MONGO_URI=${MONGO_URI:-mongodb://mongo:27017/mimikiku}
+      # Optional telemetry (traces, metrics, logs) over OTLP/HTTP; unset or empty = off.
+      # Set it in docker/.env, or let docker-start.sh add compose.olly.yml. See OLLY.md.
+      # MIMIKIKU_INSTANCE names this server on the dashboard.
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      - OTEL_SERVICE_NAME=mimikiku-server
+      - OTEL_RESOURCE_ATTRIBUTES=deployment.environment.name=${DEPLOY_ENV:-production}
+      - MIMIKIKU_INSTANCE=${MIMIKIKU_INSTANCE:-mimikiku}
+    depends_on:
+      - mongo
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7777/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Users, sessions, transcripts, service settings (and recording audio when
+  # STORE_AUDIO=1). Only reachable on the compose network; for a shell or a
+  # backup: docker exec -it mimikiku-mongo mongosh mimikiku / mongodump.
+  mongo:
+    image: mongo:8
+    container_name: mimikiku-mongo
+    networks:
+      - mimikiku-network
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping: 1}).ok"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  model-cache:
+    driver: local
+  mongo-data:
+    driver: local
+
+
+# -----------------------------------------------------------------------------
+# Networks
+# -----------------------------------------------------------------------------
+networks:
+  mimikiku-network:
+    driver: bridge

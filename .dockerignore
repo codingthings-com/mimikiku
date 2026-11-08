@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+
+# Logs
+logs/
+*.log
+
+# Node
+node_modules/
+webui/node_modules/
+webui/dist/
+
+# Git
+.git/
+.gitignore
+.gitmodules
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Docs
+docs/
+
+# Docker
+docker/
+
+# Other
+*.txt
+!requirements.txt
+!requirements-dev.txt

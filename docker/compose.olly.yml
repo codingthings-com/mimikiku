@@ -1,0 +1,14 @@
+# Optional telemetry to an observability stack ("Olly") on the olly_network docker network:
+# joins it and exports to its collector. docker-start.sh adds this file when olly_network
+# exists; OLLY_OTLP_URL= (empty) turns it off. See OLLY.md.
+services:
+  server:
+    networks:
+      - olly
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OLLY_OTLP_URL-http://olly-collector:4318}
+
+networks:
+  olly:
+    external: true
+    name: olly_network

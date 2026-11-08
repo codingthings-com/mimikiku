@@ -1,0 +1,23 @@
+/.venv
+/docker-compose.override.yml
+
+# VSCode specific
+*.code-workspace
+.vscode/
+
+/output/
+
+__pycache__/
+*.pyc
+/*.log
+
+logs/
+
+.DS_Store
+
+.env
+
+.pytest_cache/
+
+# Local-only notes (hosted deployment details)
+LOCAL.md

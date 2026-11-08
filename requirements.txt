@@ -1,0 +1,18 @@
+torch
+torchaudio
+python-dotenv
+fastapi[all]
+uvicorn
+nemo_toolkit[asr]
+omegaconf
+hydra-core
+websocket-client
+psutil
+rx
+numpy
+pymongo>=4.13
+argon2-cffi
+# Telemetry to Olly. opentelemetry-proto must stay on a protobuf NeMo accepts (~=5.29).
+opentelemetry-sdk
+opentelemetry-exporter-otlp-proto-http
+opentelemetry-instrumentation-fastapi
