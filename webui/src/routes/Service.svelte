@@ -148,7 +148,10 @@
 
     <section class="card">
       <h2>Servers</h2>
-      <p class="sub">Every running Mimikiku server checks in every 30 seconds.</p>
+      <p class="sub">
+        Servers currently running. Each one shows whether it's using the latest settings or needs a restart. A server
+        that stops responding disappears from this list within about 2 minutes.
+      </p>
       {#if !state.instances.length}
         <p class="muted">No servers have checked in recently.</p>
       {/if}
