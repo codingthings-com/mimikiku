@@ -325,7 +325,7 @@
       {#if sys}
         <dl>
           <dt>Cache hit rate</dt>
-          <dd>{pct(sys.cache_hit_rate, 1)}</dd>
+          <dd>{sys.cache_hit_rate == null ? "—" : `${sys.cache_hit_rate.toFixed(1)}%`}</dd>
           <dt>Models created</dt>
           <dd>{sys.total_models_created}</dd>
           <dt>Avg load time</dt>

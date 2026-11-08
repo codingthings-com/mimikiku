@@ -2,6 +2,8 @@
 
 Real-time transcription with speaker labels for your team, on your own NVIDIA GPU. Audio streams over a WebSocket. NVIDIA NeMo models transcribe it live (Nemotron streaming ASR, Sortformer diarization). Transcripts are saved per user on the server.
 
+![Mimikiku web app: live transcript with speaker labels](assets/mimikiku-01.png)
+
 ## Quick start
 
 You need an NVIDIA GPU, Docker with Compose 2.24 or later, and the NVIDIA Container Toolkit.
@@ -31,6 +33,16 @@ Keep it secret. `.env` is gitignored.
 - **Web app** (this repo): record from the mic, browse and edit transcripts.
 - **mimikiku-capture**: terminal app that streams system audio or a mic. Uses an API token.
 - **mimikiku-ios**: iPhone app. Coming later.
+
+## Screenshots
+
+| Home | Speakers renamed |
+|---|---|
+| ![Home screen](assets/mimikiku-landing.png) | ![Transcript with named speakers](assets/mimikiku-02.png) |
+| **Transcripts** | **Service settings** |
+| ![Transcript list](assets/mimikiku-transcripts.png) | ![Service settings](assets/mimikiku-service-settings.png) |
+| **Monitoring** | |
+| ![Monitoring](assets/mimikiku-monitoring.png) | |
 
 ## Layout
 

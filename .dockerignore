@@ -37,8 +37,12 @@ Thumbs.db
 dist/
 build/
 
-# Docs
+# Docs and screenshots
 docs/
+assets/
+
+# Secrets
+.env
 
 # Docker
 docker/
