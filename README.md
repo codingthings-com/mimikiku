@@ -31,7 +31,7 @@ Keep it secret. `.env` is gitignored.
 ## Clients
 
 - **Web app** (this repo): record from the mic, browse and edit transcripts.
-- **mimikiku-capture**: terminal app that streams system audio or a mic. Uses an API token.
+- **[mimikiku-capture](https://github.com/codingthings-com/mimikiku-capture)**: terminal app that streams system audio or a mic. Uses an API token.
 - **mimikiku-ios**: iPhone app. Coming later.
 
 ## Screenshots
